@@ -1,13 +1,16 @@
-use std::cmp::Ordering;
-use std::fmt;
-use std::fmt::Write;
-use std::hash::Hash;
-use std::hash::Hasher;
-use std::marker::PhantomData;
-use std::mem;
-use std::ops::Deref;
-use std::str;
-use std::str::Utf8Error;
+use alloc::boxed::Box;
+use alloc::string::String;
+use alloc::vec::Vec;
+use core::cmp::Ordering;
+use core::fmt;
+use core::fmt::Write;
+use core::hash::Hash;
+use core::hash::Hasher;
+use core::marker::PhantomData;
+use core::mem;
+use core::ops::Deref;
+use core::str;
+use core::str::Utf8Error;
 
 use crate::raw::RawYarn;
 use crate::Utf8Chunks;

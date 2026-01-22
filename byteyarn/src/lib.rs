@@ -68,9 +68,12 @@
 //! ```
 
 #![deny(missing_docs)]
+#![no_std]
+
+extern crate alloc;
 
 #[cfg(doc)]
-use std::borrow::Cow;
+use alloc::borrow::Cow;
 
 mod boxed;
 mod convert;
@@ -87,7 +90,7 @@ pub use buf_trait::Buf;
 // Macro stuff.
 #[doc(hidden)]
 pub mod m {
-  pub extern crate std;
+  pub extern crate core as std;
 }
 
 /// An optimized Unicode string.

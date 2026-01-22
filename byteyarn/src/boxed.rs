@@ -1,15 +1,18 @@
-use std::alloc::Layout;
-use std::cmp::Ordering;
-use std::fmt;
-use std::hash::Hash;
-use std::hash::Hasher;
-use std::marker::PhantomData;
-use std::mem;
-use std::ops::Deref;
-use std::ptr::NonNull;
-use std::slice;
-use std::str;
-use std::str::Utf8Error;
+use ::alloc::boxed::Box;
+use ::alloc::string::String;
+use ::alloc::vec::Vec;
+use core::alloc::Layout;
+use core::cmp::Ordering;
+use core::fmt;
+use core::hash::Hash;
+use core::hash::Hasher;
+use core::marker::PhantomData;
+use core::mem;
+use core::ops::Deref;
+use core::ptr::NonNull;
+use core::slice;
+use core::str;
+use core::str::Utf8Error;
 
 use crate::raw::RawYarn;
 use crate::Utf8Chunks;
@@ -328,11 +331,11 @@ where
         let layout = buf_trait::layout_of(self.as_slice());
         let ptr = match layout.size() {
           0 => NonNull::<Buf::Element>::dangling().as_ptr() as *mut u8,
-          _ => std::alloc::alloc(layout),
+          _ => alloc::alloc::alloc(layout),
         };
 
         if ptr.is_null() {
-          std::alloc::handle_alloc_error(layout);
+          alloc::alloc::handle_alloc_error(layout);
         }
 
         let raw = self.into_raw();

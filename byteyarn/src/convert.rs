@@ -1,6 +1,9 @@
-use std::borrow::Borrow;
-use std::fmt;
-use std::str::Utf8Error;
+use alloc::boxed::Box;
+use alloc::string::String;
+use alloc::vec::Vec;
+use core::borrow::Borrow;
+use core::fmt;
+use core::str::Utf8Error;
 
 use crate::YarnBox;
 use crate::YarnRef;

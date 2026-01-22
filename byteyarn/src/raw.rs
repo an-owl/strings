@@ -1,12 +1,14 @@
-use std::alloc;
-use std::fmt;
-use std::fmt::Write;
-use std::mem;
-use std::mem::ManuallyDrop;
-use std::mem::MaybeUninit;
-use std::num::NonZeroUsize;
-use std::ptr;
-use std::slice;
+use ::alloc::boxed::Box;
+use ::alloc::vec::Vec;
+use core::alloc;
+use core::fmt;
+use core::fmt::Write;
+use core::mem;
+use core::mem::ManuallyDrop;
+use core::mem::MaybeUninit;
+use core::num::NonZeroUsize;
+use core::ptr;
+use core::slice;
 
 /// The core implementation of yarns.
 ///
@@ -237,7 +239,7 @@ impl RawYarn {
     }
 
     debug_assert!(layout.size() > 0);
-    alloc::dealloc(self.ptr as *mut u8, layout)
+    ::alloc::alloc::dealloc(self.ptr as *mut u8, layout)
   }
 
   /// Returns a pointer into the data for this raw yarn.
@@ -326,7 +328,7 @@ impl RawYarn {
       // SAFETY: This is a precondition for this function.
       // This allows the compiler to assume len <= Self::SSO_LEN for the rest
       // of the function body.
-      std::hint::unreachable_unchecked();
+      core::hint::unreachable_unchecked();
     }
 
     let tagged_len = (len as u8) | Self::SMALL << Self::SHIFT8;
@@ -579,9 +581,9 @@ impl AlignedBox {
     layout: alloc::Layout,
     slices: impl IntoIterator<Item = &'a [u8]>,
   ) -> Self {
-    let mut ptr = alloc::alloc(layout);
+    let mut ptr = ::alloc::alloc::alloc(layout);
     if ptr.is_null() {
-      alloc::handle_alloc_error(layout);
+      ::alloc::alloc::handle_alloc_error(layout);
     }
 
     for slice in slices {
@@ -626,9 +628,9 @@ impl Drop for AlignedBox {
       ManuallyDrop::new(mem::replace(&mut self.data, [].into())).as_mut_ptr();
 
     unsafe {
-      alloc::dealloc(
+      ::alloc::alloc::dealloc(
         ptr,
-        alloc::Layout::from_size_align_unchecked(len, self.align),
+        ::alloc::alloc::Layout::from_size_align_unchecked(len, self.align),
       )
     }
   }

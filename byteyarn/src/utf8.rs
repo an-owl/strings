@@ -1,6 +1,6 @@
 //! UTF-8 utilities not provided by the standard library.
 
-use std::str;
+use core::str;
 
 #[cfg(doc)]
 use crate::*;
